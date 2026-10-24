@@ -327,6 +327,53 @@
           <p>No proprietary lock-in, no telemetry, and no third-party tracking. Auditable Rust codebase licensed under the permissive MIT License.</p>
         </div>
       </div>
+
+      <!-- Interactive Zero-Knowledge Playground & Scrambler -->
+      <div class="crypto-playground-card reveal-on-scroll">
+        <div class="playground-top">
+          <div class="playground-title-box">
+            <span class="badge-mini">INTERACTIVE PLAYGROUND</span>
+            <h3>Test In-Memory Zero-Knowledge Scrambling</h3>
+            <p>Type any sensitive phrase below to see how client-side AES-256-GCM AEAD transforms it into unreadable ciphertext before it leaves your device.</p>
+          </div>
+        </div>
+
+        <div class="scrambler-split">
+          <div class="scrambler-pane">
+            <label for="scrambler-input">Plaintext Input (Local RAM only):</label>
+            <div class="input-wrapper">
+              <input type="text" id="scrambler-input" value="My confidential passport and bank records" placeholder="Type anything sensitive...">
+              <button id="scrambler-reset-btn" class="btn-micro" title="Reset to sample text">Reset</button>
+            </div>
+            <div class="scrambler-subtext">
+              <span>Argon2id Salt: <code id="mock-salt">0x4a91...e82c</code></span>
+              <span>Memory Overhead: <strong>19 MiB</strong></span>
+            </div>
+          </div>
+
+          <div class="scrambler-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+
+          <div class="scrambler-pane scrambler-pane-out">
+            <div class="pane-out-header">
+              <label>AES-256-GCM Ciphertext Payload:</label>
+              <span class="aead-tag-status" id="aead-status-badge">16-BYTE AEAD TAG OK</span>
+            </div>
+            <div class="ciphertext-display" id="scrambler-output">
+              d84f a901 e312 bc45 77fa 1098 2eec 6841 99ab 4f21
+            </div>
+            <div class="scrambler-subtext">
+              <span>Fresh Nonce: <code id="mock-nonce">0x7f23...1109</code></span>
+              <span>Cloud Exposure: <strong class="text-safe">0 Bytes Plaintext</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </section>
 
     <!-- How It Works Flow -->
@@ -411,7 +458,61 @@
       </div>
     </section>
 
-    <!-- Downloads Hub -->
+    
+    <!-- Visual Comparison Matrix -->
+    <section class="section-block reveal-on-scroll">
+      <div class="section-header">
+        <h2>How Secure Backup Compares</h2>
+        <p>Why privacy-conscious engineers choose client-side encryption over raw cloud storage.</p>
+      </div>
+
+      <div class="comparison-table-card">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Feature & Security Guarantee</th>
+              <th class="col-highlight">Secure Backup</th>
+              <th>Standard Google Drive / Dropbox</th>
+              <th>Legacy Backup Tools</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Zero-Knowledge Client Encryption</strong></td>
+              <td class="col-highlight"><span class="check-yes">&check; Yes (AES-256-GCM)</span></td>
+              <td><span class="check-no">&cross; No (Provider holds keys)</span></td>
+              <td><span class="check-warn">&sim; Optional / Complex</span></td>
+            </tr>
+            <tr>
+              <td><strong>Memory-Hard Key Derivation</strong></td>
+              <td class="col-highlight"><span class="check-yes">&check; Argon2id (19 MiB RAM)</span></td>
+              <td><span class="check-no">&cross; None (Web login tokens)</span></td>
+              <td><span class="check-warn">&sim; PBKDF2 (Vulnerable to GPU)</span></td>
+            </tr>
+            <tr>
+              <td><strong>Local-First / 100% Offline Capable</strong></td>
+              <td class="col-highlight"><span class="check-yes">&check; Yes (Zero internet needed)</span></td>
+              <td><span class="check-no">&cross; No (Cloud dependent)</span></td>
+              <td><span class="check-yes">&check; Yes</span></td>
+            </tr>
+            <tr>
+              <td><strong>Disaster Recovery Manifest Sync</strong></td>
+              <td class="col-highlight"><span class="check-yes">&check; 1-Click Cloud Discovery</span></td>
+              <td><span class="check-warn">&sim; Manual file downloads</span></td>
+              <td><span class="check-no">&cross; No cloud catalog</span></td>
+            </tr>
+            <tr>
+              <td><strong>Cloud Provider Inspection Immunity</strong></td>
+              <td class="col-highlight"><span class="check-yes">&check; Total (Opaque binary chunks)</span></td>
+              <td><span class="check-no">&cross; Files scanned by provider AI</span></td>
+              <td><span class="check-warn">&sim; Depends on setup</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+<!-- Downloads Hub -->
     <section id="downloads" class="section-block">
       <div class="section-header">
         <h2>Download Secure Backup</h2>
@@ -427,6 +528,17 @@
           <div class="download-buttons">
             <a href="https://github.com/abdulwalidal/secure-backup/releases" id="btn-dl-appimage" class="btn-download">.AppImage (64-bit)</a>
             <a href="https://github.com/abdulwalidal/secure-backup/releases" id="btn-dl-deb" class="btn-download btn-download-alt">.deb Package</a>
+          </div>
+          <div class="cli-command-box" title="Click to copy quickrun command">
+            <span class="cli-prefix">$</span>
+            <code id="cli-cmd-text">chmod +x secure-backup_*.AppImage &amp;&amp; ./secure-backup_*.AppImage</code>
+            <button class="cli-copy-btn" id="btn-copy-cli" aria-label="Copy CLI command">
+              <svg class="icon-copy" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span class="copy-tooltip">Copy</span>
+            </button>
           </div>
         </div>
 
@@ -622,6 +734,14 @@
       document.querySelectorAll(".reveal-on-scroll").forEach(el => observer.observe(el));
     })();
   </script>
+
+
+  <!-- Floating Back to Top Button -->
+  <button id="back-to-top-btn" class="back-to-top-btn" aria-label="Scroll back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
 
 </body>
 </html>
