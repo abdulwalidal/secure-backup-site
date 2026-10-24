@@ -152,6 +152,104 @@
           </div>
         </div>
       </div>
+
+      <!-- Animated Encryption & Cloud Pipeline Visualizer -->
+      <div class="pipeline-visualizer-card reveal-on-scroll">
+        <div class="pipeline-header">
+          <div class="pipeline-badge">
+            <span class="live-dot"></span> LIVE ENCRYPTION & CLOUD SYNC PIPELINE
+          </div>
+          <span class="pipeline-status" id="pipeline-status-text">Encrypting files in local memory...</span>
+        </div>
+
+        <div class="pipeline-stage-grid">
+          <!-- Node 1: Local Plaintext Files -->
+          <div class="pipeline-node" id="pnode-local">
+            <div class="node-icon-box">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                <polyline points="13 2 13 9 20 9"></polyline>
+              </svg>
+            </div>
+            <h4>Plaintext Files</h4>
+            <div class="node-code-preview" id="preview-plaintext">
+              <span>documents.pdf</span>
+              <span class="file-size">42.8 MB</span>
+            </div>
+          </div>
+
+          <!-- Connector 1 -> 2: Argon2id + AES-256 Engine -->
+          <div class="pipeline-flow-connector">
+            <div class="particle-track">
+              <div class="flowing-particle" id="particle-1"></div>
+            </div>
+            <div class="crypto-lock-badge" title="Argon2id + AES-256-GCM authenticated cipher">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <span>AES-256-GCM</span>
+            </div>
+          </div>
+
+          <!-- Node 2: Opaque Ciphertext Chunks -->
+          <div class="pipeline-node" id="pnode-cipher">
+            <div class="node-icon-box node-cipher-box">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+              </svg>
+            </div>
+            <h4>AES Ciphertext Chunks</h4>
+            <div class="node-code-preview" id="preview-ciphertext">
+              <span class="cipher-hex">a7e9 82d1 b45f</span>
+              <span class="cipher-tag">AEAD 16B TAG OK</span>
+            </div>
+          </div>
+
+          <!-- Connector 2 -> 3: TLS Cloud Sync Stream -->
+          <div class="pipeline-flow-connector">
+            <div class="particle-track">
+              <div class="flowing-particle particle-cloud" id="particle-2"></div>
+            </div>
+            <div class="crypto-lock-badge cloud-sync-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="16 16 12 12 8 16"/>
+                <line x1="12" y1="12" x2="12" y2="21"/>
+                <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+              </svg>
+              <span>PKCE Sync</span>
+            </div>
+          </div>
+
+          <!-- Node 3: Cloud Vault Storage -->
+          <div class="pipeline-node" id="pnode-cloud">
+            <div class="node-icon-box node-cloud-box">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+              </svg>
+            </div>
+            <h4>Google Drive Vault</h4>
+            <div class="node-code-preview" id="preview-cloud">
+              <span class="vault-status-text">Opaque Storage</span>
+              <span class="zero-knowledge-pill">0% Plaintext Leak</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipeline-footer-bar">
+          <div class="terminal-feed">
+            <span class="term-prefix">&gt;</span>
+            <span class="term-log" id="term-stream-log">argon2id(pw, salt) derived 256-bit key in 312ms</span>
+          </div>
+          <div class="vault-stat">
+            <span>Client Memory: <strong>0 B Leaked</strong></span>
+          </div>
+        </div>
+      </div>
+
     </section>
 
     <!-- Features Grid -->
