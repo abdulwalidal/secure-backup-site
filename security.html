@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security & Cryptographic Specification - Secure Backup</title>
+  <meta name="description" content="Detailed cryptographic architecture, key derivation parameters, AES-256-GCM AEAD specifications, and threat model of Secure Backup.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="icons/icon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/32x32.png">
+  <link rel="apple-touch-icon" sizes="128x128" href="icons/128x128.png">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav-bar">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+        <span class="brand-title">Secure Backup</span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="security.html" class="active">Security Spec</a>
+        <a href="index.html#downloads">Download</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/abdulwalidal/secure-backup" target="_blank" rel="noopener noreferrer" class="btn-github">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          <span>GitHub</span>
+        </a>
+      </nav>
+      <div class="header-actions">
+        <button id="theme-toggle" class="btn-icon" aria-label="Toggle color theme" title="Toggle light/dark mode">
+          <svg id="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg id="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container article-container">
+    <div class="article-header">
+      <h1>Cryptographic Architecture & Transparency</h1>
+      <p>Technical specification of algorithms, parameters, binary file packaging, and threat model.</p>
+    </div>
+
+    <div class="article-body">
+      <section>
+        <h2>1. Zero-Knowledge Threat Model</h2>
+        <p>Secure Backup is engineered under the fundamental assumption that any network transmission or untrusted remote storage provider (such as Google Drive) may be subject to surveillance, data breaches, or insider access. To provide absolute privacy:</p>
+        <ul>
+          <li><strong>No Server-Side Knowledge:</strong> The user's passphrase, derived symmetric keys, file names, directory structures, and file contents are never transmitted across any network in plaintext.</li>
+          <li><strong>Autonomous Client Operation:</strong> All cryptographic operations happen exclusively in the local desktop process using pure Rust cryptography crates compiled into the native binary.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>2. Key Derivation: Argon2id</h2>
+        <p>Master symmetric keys are never stored on disk. Instead, when a user enters their passphrase, a 256-bit AES key is deterministically derived using the memory-hard <strong>Argon2id</strong> algorithm (RFC 9106, version 0x13):</p>
+        <ul>
+          <li><strong>Memory Cost (m_cost):</strong> 19,456 KiB (19 MiB RAM)</li>
+          <li><strong>Time Cost (t_cost / iterations):</strong> 2 passes over memory</li>
+          <li><strong>Parallelism (p_cost / lanes):</strong> 1 thread lane</li>
+          <li><strong>Salt:</strong> 16-byte cryptographically random salt generated using the OS CSPRNG (<code>rand::rngs::OsRng</code>)</li>
+          <li><strong>Key Output Length:</strong> 32 bytes (256 bits)</li>
+        </ul>
+        <p>This configuration creates extreme computational resistance against GPU/ASIC brute-force dictionary attacks while maintaining sub-second latency on standard desktop CPUs.</p>
+      </section>
+
+      <section>
+        <h2>3. Symmetric Authenticated Encryption: AES-256-GCM</h2>
+        <p>File content and snapshot manifests are encrypted using <strong>AES-256-GCM</strong> (Galois/Counter Mode). AES-GCM is an Authenticated Encryption with Associated Data (AEAD) standard that provides both confidentiality and verifiable authenticity.</p>
+        <ul>
+          <li><strong>Nonce Isolation:</strong> A fresh, cryptographically secure 12-byte (96-bit) nonce is generated for every single file. Reusing a nonce with the same key would compromise GCM authentication; generating fresh nonces per file guarantees nonce uniqueness.</li>
+          <li><strong>AEAD Authenticator Tag:</strong> A 16-byte polynomial authentication tag is appended to every ciphertext payload. If a single bit in the ciphertext, salt, or nonce is altered (bit-flip attack or bit-rot), the authentication tag verification fails immediately and no decrypted data is written to disk.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>4. Encrypted Binary File Format</h2>
+        <p>Every encrypted file in a Secure Backup archive follows a standardized binary container structure:</p>
+        <div class="highlight-box" style="font-family: monospace; font-size: 13px; line-height: 1.8;">
+          [ MAGIC HEADER (8 Bytes: "SECBKP01") ]<br>
+          [ ARGON2 SALT (16 Bytes) ]<br>
+          [ AES-GCM NONCE (12 Bytes) ]<br>
+          [ CIPHERTEXT PAYLOAD (Variable length) + AEAD TAG (16 Bytes) ]
+        </div>
+        <p>This self-contained structure allows independent verification and recovery of individual files even if external manifest indexes are unavailable.</p>
+      </section>
+
+      <section>
+        <h2>5. Manifest Authenticity & Substitution Defenses</h2>
+        <p>When a backup is created, the list of file paths, sizes, timestamps, and pre-encryption SHA-256 integrity digests is serialized to JSON and encrypted using the same master key into <code>manifest.enc</code>. During restore:</p>
+        <ul>
+          <li>The manifest is decrypted and validated against its AEAD tag.</li>
+          <li>Each restored file is verified post-decryption against its recorded SHA-256 hash.</li>
+          <li>Path traversal protections reject any relative (<code>../</code>) or absolute paths in the manifest.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-content">
+      <span>Secure Backup &copy; 2026. Made by <a href="https://github.com/abdulwalidal" target="_blank" rel="noopener noreferrer" style="color: var(--text-main); font-weight: 600; text-decoration: underline;">Abdul Wali Dal</a>. Released under the MIT License.</span>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="https://github.com/abdulwalidal/secure-backup">Source Code</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function initTheme() {
+      const toggle = document.getElementById("theme-toggle");
+      const sun = document.getElementById("sun-icon");
+      const moon = document.getElementById("moon-icon");
+      const saved = localStorage.getItem("theme");
+      if (saved === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+        if (sun) sun.style.display = "block";
+        if (moon) moon.style.display = "none";
+      }
+      toggle?.addEventListener("click", () => {
+        const isLight = document.documentElement.getAttribute("data-theme") === "light";
+        if (isLight) {
+          document.documentElement.removeAttribute("data-theme");
+          localStorage.setItem("theme", "dark");
+          if (sun) sun.style.display = "none";
+          if (moon) moon.style.display = "block";
+        } else {
+          document.documentElement.setAttribute("data-theme", "light");
+          localStorage.setItem("theme", "light");
+          if (sun) sun.style.display = "block";
+          if (moon) moon.style.display = "none";
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

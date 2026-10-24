@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Backup - Open-Source Zero-Knowledge Desktop Backup</title>
+  <meta name="description" content="Open-source zero-knowledge desktop backup engineered in Rust, Tauri 2, and TypeScript. Authenticated AES-256-GCM encryption with Google Drive cloud sync.">
+  <meta property="og:title" content="Secure Backup - Zero-Knowledge Desktop Backup">
+  <meta property="og:description" content="Open-source zero-knowledge desktop backup application with authenticated AES-256-GCM encryption and private Google Drive synchronization.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://abdulwalidal.github.io/secure-backup/">
+  <meta property="og:image" content="https://abdulwalidal.github.io/secure-backup/icons/icon.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Secure Backup - Zero-Knowledge Desktop Backup">
+  <meta name="twitter:description" content="Client-side zero-knowledge encrypted backups for Linux, Windows, and macOS.">
+  <meta name="twitter:image" content="https://abdulwalidal.github.io/secure-backup/icons/icon.png">
+  <link rel="canonical" href="https://abdulwalidal.github.io/secure-backup/">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="icons/icon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/32x32.png">
+  <link rel="apple-touch-icon" sizes="128x128" href="icons/128x128.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Secure Backup",
+    "operatingSystem": "Linux, Windows, macOS",
+    "applicationCategory": "SecurityApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Open-source zero-knowledge desktop backup application with authenticated AES-256-GCM encryption and Google Drive cloud synchronization.",
+    "author": {
+      "@type": "Person",
+      "name": "Abdul Wali Dal",
+      "url": "https://github.com/abdulwalidal"
+    }
+  }
+  </script>
+</head>
+<body>
+  <!-- Navigation Header -->
+  <header>
+    <div class="container nav-bar">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+        <span class="brand-title">Secure Backup</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#security">Security</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#downloads">Download</a>
+        <a href="#faq">FAQ</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/abdulwalidal/secure-backup" target="_blank" rel="noopener noreferrer" class="btn-github">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          <span>GitHub</span>
+        </a>
+      </nav>
+      <div class="header-actions">
+        <button id="theme-toggle" class="btn-icon" aria-label="Toggle color theme" title="Toggle light/dark mode">
+          <svg id="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg id="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+        <button id="mobile-menu-btn" class="btn-icon mobile-only" aria-label="Toggle navigation menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="version-badge">
+        <span class="badge-dot"></span>
+        <span>Version 0.1.0 • Built with Rust & Tauri 2</span>
+      </div>
+      <h1>Zero-Knowledge Desktop Backup</h1>
+      <p>An open-source desktop application engineered with authenticated AES-256-GCM encryption and Argon2id key derivation. Your files are encrypted locally before optional synchronization to personal cloud vaults.</p>
+
+      <div class="hero-actions">
+        <a href="#downloads" id="hero-download-btn" class="btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <span id="hero-download-label">Download for Linux (x86_64)</span>
+        </a>
+        <a href="#security" class="btn-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span>Security Architecture</span>
+        </a>
+      </div>
+
+      <!-- App Interface Preview Mockup -->
+      <div class="app-preview-card">
+        <div class="preview-header">
+          <div class="preview-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <div class="preview-title">Secure Backup — Snapshot History & Verification</div>
+        </div>
+        <div class="preview-body">
+          <div class="preview-meta-row">
+            <span class="tag-badge">AES-256-GCM</span>
+            <span class="tag-badge tag-success">Argon2id Verified</span>
+            <span class="tag-badge tag-cloud">Google Drive Synced</span>
+          </div>
+          <div class="preview-snapshot-row">
+            <div class="snapshot-col">
+              <strong>Source:</strong> <code>~/Documents/Personal-Vault</code>
+            </div>
+            <div class="snapshot-col">
+              <strong>Files:</strong> 1,420 files (248.5 MB)
+            </div>
+            <div class="snapshot-col">
+              <span class="status-pill status-ready">Encrypted & Verified</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section id="features" class="section-block">
+      <div class="section-header">
+        <h2>Engineered for Privacy & Sovereign Ownership</h2>
+        <p>No subscriptions, no intermediary relay servers, and no unencrypted cloud exposure.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <h3>Client-Side Zero-Knowledge</h3>
+          <p>Your master passphrase never leaves your machine. Keys are derived in RAM with Argon2id and random 16-byte salts, producing authenticated AES-256-GCM ciphertexts.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+            </svg>
+          </div>
+          <h3>Direct Google Drive Sync</h3>
+          <p>Link your personal Google account via OAuth 2.0 PKCE to sync encrypted archives directly into your own private storage vault with automated exponential backoff.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 11 12 14 22 4"/>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </svg>
+          </div>
+          <h3>Instant Test-Unlock Verification</h3>
+          <p>Validate your passphrase and test-decrypt snapshot manifests in memory without extracting payloads to disk. Catch forgotten passphrases before disaster strikes.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </div>
+          <h3>Disaster Recovery Catalog</h3>
+          <p>If your local machine is lost or wiped, Secure Backup discovers remote snapshot manifests from your cloud vault and restores your full snapshot ledger automatically.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <ellipse cx="12" cy="5" rx="9" ry="3"/>
+              <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+              <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+            </svg>
+          </div>
+          <h3>Local SQLite Ledger</h3>
+          <p>Track historical snapshots, file counts, hashes, and cloud sync states in an embedded SQLite database. Operates 100% offline with zero cloud dependency.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="16 18 22 12 16 6"/>
+              <polyline points="8 6 2 12 8 18"/>
+            </svg>
+          </div>
+          <h3>100% Free & Open Source</h3>
+          <p>No proprietary lock-in, no telemetry, and no third-party tracking. Auditable Rust codebase licensed under the permissive MIT License.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Flow -->
+    <section id="how-it-works" class="section-block">
+      <div class="section-header">
+        <h2>How It Works</h2>
+        <p>Four simple steps to impenetrable, verifiable backups.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">01</div>
+          <h4>Select Source Directory</h4>
+          <p>Pick any local folder or project. Secure Backup scans files and computes SHA-256 integrity hashes.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">02</div>
+          <h4>Derive Keys with Argon2id</h4>
+          <p>Your passphrase is hashed into a 256-bit key using Argon2id with 19 MiB memory cost and fresh OS salts.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">03</div>
+          <h4>AES-256-GCM Encryption</h4>
+          <p>Files and manifests are encrypted with authenticated ciphertexts and 12-byte cryptographically random nonces.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">04</div>
+          <h4>Sync & Disaster Restore</h4>
+          <p>Upload encrypted snapshots to Google Drive. Restore anytime locally or reconstruct catalog on a fresh PC.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Security Deep-Dive -->
+    <section id="security" class="section-block">
+      <div class="section-header">
+        <h2>Cryptographic Specification & Threat Model</h2>
+        <p>Transparent, auditable security primitives implemented in pure Rust.</p>
+      </div>
+
+      <div class="spec-table-card">
+        <table class="spec-table">
+          <thead>
+            <tr>
+              <th>Security Component</th>
+              <th>Primitive / Standard</th>
+              <th>Technical Specification</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Key Derivation</strong></td>
+              <td>Argon2id (v0x13)</td>
+              <td>19 MiB memory cost, 2 iterations, 1 lane, 16-byte random salt from OS CSPRNG.</td>
+            </tr>
+            <tr>
+              <td><strong>Symmetric Cipher</strong></td>
+              <td>AES-256-GCM</td>
+              <td>Authenticated encryption with associated data (AEAD), unique 12-byte nonce per file.</td>
+            </tr>
+            <tr>
+              <td><strong>Integrity Verification</strong></td>
+              <td>SHA-256 & GCM Tag</td>
+              <td>Every file verified via SHA-256 hash plus AES-GCM 16-byte polynomial authenticator tag.</td>
+            </tr>
+            <tr>
+              <td><strong>Cloud Auth Protocol</strong></td>
+              <td>OAuth 2.0 PKCE</td>
+              <td>SHA-256 Code Challenge with loopback redirect on localhost. Restricted <code>drive.file</code> scope.</td>
+            </tr>
+            <tr>
+              <td><strong>Network Resiliency</strong></td>
+              <td>Exponential Backoff</td>
+              <td>Automated retry on 429 / 5xx responses with randomized exponential jitter.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Zero-Knowledge Promise:</strong> Your passphrase is never saved to disk, transmitted over the wire, or written to SQLite. Neither Google, cloud providers, nor the application developers have access to your keys or decryption data.
+      </div>
+    </section>
+
+    <!-- Downloads Hub -->
+    <section id="downloads" class="section-block">
+      <div class="section-header">
+        <h2>Download Secure Backup</h2>
+        <p>Available cross-platform for Linux, Windows, and macOS desktop systems.</p>
+      </div>
+
+      <div class="downloads-grid">
+        <div class="download-card">
+          <div class="os-icon">🐧</div>
+          <h3>Linux</h3>
+          <p>Debian package and portable AppImage.</p>
+          <div class="download-buttons">
+            <a href="https://github.com/abdulwalidal/secure-backup/releases" id="btn-dl-appimage" class="btn-download">.AppImage (64-bit)</a>
+            <a href="https://github.com/abdulwalidal/secure-backup/releases" id="btn-dl-deb" class="btn-download btn-download-alt">.deb Package</a>
+          </div>
+        </div>
+
+        <div class="download-card">
+          <div class="os-icon">🪟</div>
+          <h3>Windows</h3>
+          <p>Installer and portable standalone binary.</p>
+          <div class="download-buttons">
+            <a href="https://github.com/abdulwalidal/secure-backup/releases" id="btn-dl-msi" class="btn-download">.msi Installer</a>
+            <a href="https://github.com/abdulwalidal/secure-backup/releases" id="btn-dl-exe" class="btn-download btn-download-alt">Portable .exe</a>
+          </div>
+        </div>
+
+        <div class="download-card">
+          <div class="os-icon">🍎</div>
+          <h3>macOS</h3>
+          <p>Universal binary for Apple Silicon & Intel.</p>
+          <div class="download-buttons">
+            <a href="https://github.com/abdulwalidal/secure-backup/releases" id="btn-dl-dmg-arm" class="btn-download">.dmg (Apple Silicon)</a>
+            <a href="https://github.com/abdulwalidal/secure-backup/releases" id="btn-dl-dmg-intel" class="btn-download btn-download-alt">.dmg (Intel x64)</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="section-block">
+      <div class="section-header">
+        <h2>Frequently Asked Questions</h2>
+        <p>Common questions about cryptography, cloud storage, and backup restoration.</p>
+      </div>
+
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Can Google or cloud providers see my unencrypted files?</summary>
+          <p>No. All files and snapshot manifests are encrypted on your local computer before any data leaves your machine. Google Drive only stores opaque AES-256-GCM ciphertext chunks. Google cannot inspect the filenames, directory structure, or file contents.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>What happens if I forget my backup passphrase?</summary>
+          <p>Because Secure Backup adheres strictly to zero-knowledge cryptography, there is no back door, reset link, or recovery key stored anywhere. If you lose your passphrase, the ciphertext cannot be decrypted. We recommend saving your passphrase in a reliable password manager.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Does Secure Backup require an internet connection?</summary>
+          <p>No. Creating encrypted local backups, testing passphrases, and restoring from local storage works 100% offline. An internet connection is only needed when you choose to synchronize snapshots to your Google Drive account.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>What if my computer crashes or hard drive dies?</summary>
+          <p>Install Secure Backup on any new machine, link your Google Drive vault, and click "Discover Cloud Snapshots". The application downloads the encrypted manifests and reconstructs your snapshot ledger, allowing you to restore all files.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-content">
+      <span>Secure Backup &copy; 2026. Made by <a href="https://github.com/abdulwalidal" target="_blank" rel="noopener noreferrer" style="color: var(--text-main); font-weight: 600; text-decoration: underline;">Abdul Wali Dal</a>. Released under the MIT License.</span>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="https://github.com/abdulwalidal/secure-backup">Source Code</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle (Dark / Light mode)
+    (function initTheme() {
+      const toggle = document.getElementById("theme-toggle");
+      const sun = document.getElementById("sun-icon");
+      const moon = document.getElementById("moon-icon");
+      const saved = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      let theme = saved || (prefersDark ? "dark" : "dark");
+
+      const applyTheme = (t) => {
+        if (t === "light") {
+          document.documentElement.setAttribute("data-theme", "light");
+          if (sun) sun.style.display = "block";
+          if (moon) moon.style.display = "none";
+        } else {
+          document.documentElement.removeAttribute("data-theme");
+          if (sun) sun.style.display = "none";
+          if (moon) moon.style.display = "block";
+        }
+        localStorage.setItem("theme", t);
+      };
+
+      applyTheme(theme);
+      toggle?.addEventListener("click", () => {
+        theme = (theme === "light") ? "dark" : "light";
+        applyTheme(theme);
+      });
+    })();
+
+    // Mobile navigation drawer toggle
+    (function initMobileNav() {
+      const btn = document.getElementById("mobile-menu-btn");
+      const nav = document.querySelector(".nav-links");
+      btn?.addEventListener("click", () => {
+        nav?.classList.toggle("mobile-open");
+      });
+      nav?.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          nav?.classList.remove("mobile-open");
+        });
+      });
+    })();
+
+    // Client-side OS detection for dynamic Hero download CTA
+    (function detectClientOS() {
+      const ua = navigator.userAgent || "";
+      const label = document.getElementById("hero-download-label");
+      const btn = document.getElementById("hero-download-btn");
+      if (!label || !btn) return;
+
+      if (/Macintosh|Mac OS X/i.test(ua)) {
+        label.textContent = "Download for macOS (.dmg)";
+        btn.href = "#downloads";
+      } else if (/Windows|Win32|Win64/i.test(ua)) {
+        label.textContent = "Download for Windows (.msi)";
+        btn.href = "#downloads";
+      } else {
+        label.textContent = "Download for Linux (.AppImage)";
+        btn.href = "#downloads";
+      }
+    })();
+
+    // Dynamic GitHub Releases API client
+    (async function fetchLatestRelease() {
+      try {
+        const res = await fetch("https://api.github.com/repos/abdulwalidal/secure-backup/releases/latest");
+        if (!res.ok) return;
+        const data = await res.json();
+        const tag = data.tag_name || "v0.1.0";
+        const badge = document.querySelector(".version-badge span:last-child");
+        if (badge) badge.textContent = `${tag} Latest Release • Built with Rust & Tauri 2`;
+
+        const assets = data.assets || [];
+        assets.forEach((asset) => {
+          const name = asset.name.toLowerCase();
+          const url = asset.browser_download_url;
+          if (name.endsWith(".appimage")) {
+            const el = document.getElementById("btn-dl-appimage");
+            if (el) el.href = url;
+            const heroBtn = document.getElementById("hero-download-btn");
+            if (heroBtn && /Linux/i.test(navigator.userAgent)) heroBtn.href = url;
+          } else if (name.endsWith(".deb")) {
+            const el = document.getElementById("btn-dl-deb");
+            if (el) el.href = url;
+          } else if (name.endsWith(".msi")) {
+            const el = document.getElementById("btn-dl-msi");
+            if (el) el.href = url;
+            const heroBtn = document.getElementById("hero-download-btn");
+            if (heroBtn && /Win/i.test(navigator.userAgent)) heroBtn.href = url;
+          } else if (name.endsWith(".exe")) {
+            const el = document.getElementById("btn-dl-exe");
+            if (el) el.href = url;
+          } else if (name.includes("aarch64") && name.endsWith(".dmg")) {
+            const el = document.getElementById("btn-dl-dmg-arm");
+            if (el) el.href = url;
+            const heroBtn = document.getElementById("hero-download-btn");
+            if (heroBtn && /Mac/i.test(navigator.userAgent)) heroBtn.href = url;
+          } else if (name.endsWith(".dmg")) {
+            const el = document.getElementById("btn-dl-dmg-intel");
+            if (el) el.href = url;
+          }
+        });
+      } catch (e) {
+        // Fallback to static GitHub Releases page on network error
+      }
+    })();
+  </script>
+</body>
+</html>
