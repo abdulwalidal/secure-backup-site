@@ -1845,3 +1845,49 @@ header, main, footer {
   color: #334155 !important;
   font-weight: 500;
 }
+
+/* Explicit Light Mode contrast overrides for Cards & Mockups */
+[data-theme="light"] .preview-terminal,
+[data-theme="light"] .feature-card,
+[data-theme="light"] .step-card,
+[data-theme="light"] .download-card {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="light"] .feature-icon-box {
+  background: rgba(37, 99, 235, 0.1) !important;
+  color: #1d4ed8 !important;
+}
+
+[data-theme="light"] .feature-card h3,
+[data-theme="light"] .step-card h3,
+[data-theme="light"] .download-card h3 {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .feature-card p,
+[data-theme="light"] .step-card p,
+[data-theme="light"] .download-card p {
+  color: #475569 !important;
+}
+
+[data-theme="light"] .tag-badge {
+  background: rgba(37, 99, 235, 0.08) !important;
+  border-color: rgba(37, 99, 235, 0.25) !important;
+  color: #1d4ed8 !important;
+}
+
+[data-theme="light"] .stat-card {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] .stat-card strong {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .stat-card span {
+  color: #475569 !important;
+}
