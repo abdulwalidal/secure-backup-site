@@ -1684,6 +1684,14 @@ header, main, footer {
 [data-theme="light"] h4,
 [data-theme="light"] strong {
   color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+[data-theme="light"] .hero h1,
+[data-theme="light"] h1 {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
 }
 
 [data-theme="light"] p,
@@ -1831,4 +1839,9 @@ header, main, footer {
 
 [data-theme="light"] .btn-download-alt:hover {
   background-color: #f1f5f9 !important;
+}
+
+[data-theme="light"] .hero > p {
+  color: #334155 !important;
+  font-weight: 500;
 }
