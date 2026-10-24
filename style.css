@@ -1665,3 +1665,170 @@ header, main, footer {
   border-color: rgba(96, 165, 250, 0.4);
   box-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.65), 0 0 35px rgba(59, 130, 246, 0.18);
 }
+
+/* === LIGHT MODE TYPOGRAPHY & CONTRAST HARDENING === */
+[data-theme="light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --card-bg: #ffffff;
+  --card-border: #cbd5e1;
+  --text-main: #0f172a;
+  --text-muted: #334155;
+  --text-dim: #64748b;
+  --accent-soft: rgba(37, 99, 235, 0.1);
+}
+
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] strong {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] p,
+[data-theme="light"] span,
+[data-theme="light"] li,
+[data-theme="light"] td {
+  color: #334155;
+}
+
+[data-theme="light"] .version-badge {
+  background-color: rgba(37, 99, 235, 0.08);
+  border-color: rgba(37, 99, 235, 0.25);
+  color: #1d4ed8 !important;
+}
+
+[data-theme="light"] .preview-title {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .preview-meta-row .tag-badge {
+  color: #1d4ed8;
+  background-color: rgba(37, 99, 235, 0.08);
+  border-color: rgba(37, 99, 235, 0.2);
+}
+
+[data-theme="light"] .preview-snapshot-row {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] .preview-snapshot-row span {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .snapshot-col code,
+[data-theme="light"] .spec-table td code,
+[data-theme="light"] .scrambler-subtext code {
+  background-color: #e2e8f0 !important;
+  color: #1e40af !important;
+  border: 1px solid #cbd5e1;
+}
+
+[data-theme="light"] .pipeline-header .pipeline-status {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .pipeline-badge {
+  background-color: rgba(37, 99, 235, 0.1);
+  border-color: rgba(37, 99, 235, 0.3);
+  color: #1d4ed8 !important;
+}
+
+[data-theme="light"] .crypto-lock-badge {
+  background-color: #eff6ff !important;
+  border-color: #bfdbfe !important;
+  color: #1d4ed8 !important;
+}
+
+[data-theme="light"] .cloud-sync-badge {
+  background-color: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+  color: #047857 !important;
+}
+
+[data-theme="light"] .cipher-hex {
+  color: #7e22ce !important;
+}
+
+[data-theme="light"] .cipher-tag {
+  color: #047857 !important;
+}
+
+[data-theme="light"] .file-size {
+  color: #047857 !important;
+}
+
+[data-theme="light"] .pipeline-footer-bar {
+  border-color: #e2e8f0 !important;
+  color: #64748b !important;
+}
+
+[data-theme="light"] .terminal-feed {
+  color: #1e40af !important;
+}
+
+[data-theme="light"] .term-log {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .ciphertext-display {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #7e22ce !important;
+}
+
+[data-theme="light"] .cli-command-box {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] .cli-command-box code {
+  color: #1e40af !important;
+}
+
+[data-theme="light"] .badge-mini {
+  background-color: rgba(37, 99, 235, 0.08);
+  border-color: rgba(37, 99, 235, 0.25);
+  color: #1d4ed8 !important;
+}
+
+[data-theme="light"] .aead-tag-status {
+  background: rgba(16, 185, 129, 0.15) !important;
+  border-color: rgba(16, 185, 129, 0.4) !important;
+  color: #065f46 !important;
+}
+
+[data-theme="light"] .col-highlight {
+  background-color: rgba(37, 99, 235, 0.05) !important;
+}
+
+[data-theme="light"] .faq-item summary {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .faq-item p {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .btn-secondary {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .btn-secondary:hover {
+  background-color: #f1f5f9 !important;
+  border-color: #94a3b8 !important;
+}
+
+[data-theme="light"] .btn-download-alt {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .btn-download-alt:hover {
+  background-color: #f1f5f9 !important;
+}
