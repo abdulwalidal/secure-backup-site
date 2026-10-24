@@ -34,7 +34,7 @@
     "description": "Open-source zero-knowledge desktop backup application with authenticated AES-256-GCM encryption and Google Drive cloud synchronization.",
     "author": {
       "@type": "Person",
-      "name": "Abdul Wali Dal",
+      "name": "AW Studios",
       "url": "https://github.com/abdulwalidal"
     }
   }
@@ -317,27 +317,29 @@
     <section id="downloads" class="section-block">
       <div class="section-header">
         <h2>Download Secure Backup</h2>
-        <p>Available cross-platform for Linux, Windows, and macOS desktop systems.</p>
+        <p>Linux version is fully stable and verified. Windows and macOS versions are currently in active development.</p>
       </div>
 
       <div class="downloads-grid">
-        <div class="download-card">
+        <div class="download-card" style="border-color: #3b82f6; position: relative;">
+          <div style="position: absolute; top: -11px; right: 16px; background: #2563eb; color: #fff; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 9999px; letter-spacing: 0.5px;">STABLE &bull; RECOMMENDED</div>
           <div class="os-icon">🐧</div>
           <h3>Linux</h3>
-          <p>Debian package and portable AppImage.</p>
+          <p>Production-ready Debian package and portable AppImage (Verified 100% working).</p>
           <div class="download-buttons">
             <a href="https://github.com/abdulwalidal/secure-backup/releases" id="btn-dl-appimage" class="btn-download">.AppImage (64-bit)</a>
             <a href="https://github.com/abdulwalidal/secure-backup/releases" id="btn-dl-deb" class="btn-download btn-download-alt">.deb Package</a>
           </div>
         </div>
 
-        <div class="download-card">
+        <div class="download-card" style="position: relative;">
+          <div style="position: absolute; top: -11px; right: 16px; background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 9999px; letter-spacing: 0.5px;">IN DEVELOPMENT</div>
           <div class="os-icon">🪟</div>
           <h3>Windows</h3>
-          <p>Installer and portable standalone binary.</p>
+          <p>Currently in active development. Early preview builds will be available soon.</p>
           <div class="download-buttons">
-            <a href="https://github.com/abdulwalidal/secure-backup/releases" id="btn-dl-msi" class="btn-download">.msi Installer</a>
-            <a href="https://github.com/abdulwalidal/secure-backup/releases" id="btn-dl-exe" class="btn-download btn-download-alt">Portable .exe</a>
+            <span class="btn-download btn-disabled" title="Windows builds are currently in active testing">Coming Soon (Preview)</span>
+            <a href="https://github.com/abdulwalidal/secure-backup#manual-build" class="btn-download btn-download-alt" target="_blank" rel="noopener">Build Instructions</a>
           </div>
         </div>
 
@@ -387,7 +389,7 @@
   <!-- Footer -->
   <footer>
     <div class="container footer-content">
-      <span>Secure Backup &copy; 2026. Made by <a href="https://github.com/abdulwalidal" target="_blank" rel="noopener noreferrer" style="color: var(--text-main); font-weight: 600; text-decoration: underline;">Abdul Wali Dal</a>. Released under the MIT License.</span>
+      <span>Secure Backup &copy; 2026. Made by <a href="https://github.com/abdulwalidal" target="_blank" rel="noopener noreferrer" style="color: var(--text-main); font-weight: 600; text-decoration: underline;">AW Studios</a>. Released under the MIT License.</span>
       <div class="footer-links">
         <a href="privacy.html">Privacy Policy</a>
         <a href="terms.html">Terms of Service</a>
@@ -451,10 +453,10 @@
         label.textContent = "macOS Build (Coming Soon)";
         btn.href = "#downloads";
       } else if (/Windows|Win32|Win64/i.test(ua)) {
-        label.textContent = "Download for Windows (.msi)";
+        label.textContent = "Windows (In Development) • View Linux";
         btn.href = "#downloads";
       } else {
-        label.textContent = "Download for Linux (.AppImage)";
+        label.textContent = "Download for Linux (Stable & Verified)";
         btn.href = "#downloads";
       }
     })();
