@@ -1613,3 +1613,55 @@ header {
 ::-webkit-scrollbar-thumb:hover {
   background: #334155;
 }
+
+/* Cybernetic Tech Grid & Pointer Spotlight */
+.tech-grid-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 54px 54px;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 80%);
+}
+
+[data-theme="light"] .tech-grid-overlay {
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+}
+
+.ambient-spotlight {
+  position: fixed;
+  top: 0; left: 0;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, rgba(139, 92, 246, 0.06) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
+  will-change: transform;
+}
+
+[data-theme="light"] .ambient-spotlight {
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, rgba(168, 85, 247, 0.04) 40%, transparent 70%);
+}
+
+header, main, footer {
+  position: relative;
+  z-index: 2;
+}
+
+/* Card 3D Tilt & Micro-elevation */
+.app-preview-card {
+  perspective: 1000px;
+}
+
+.crypto-playground-card:hover, .pipeline-visualizer-card:hover {
+  border-color: rgba(96, 165, 250, 0.4);
+  box-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.65), 0 0 35px rgba(59, 130, 246, 0.18);
+}
