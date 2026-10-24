@@ -344,10 +344,10 @@
         <div class="download-card">
           <div class="os-icon">🍎</div>
           <h3>macOS</h3>
-          <p>Universal binary for Apple Silicon & Intel.</p>
+          <p>Apple Silicon & Intel build in preparation.</p>
           <div class="download-buttons">
-            <a href="https://github.com/abdulwalidal/secure-backup/releases" id="btn-dl-dmg-arm" class="btn-download">.dmg (Apple Silicon)</a>
-            <a href="https://github.com/abdulwalidal/secure-backup/releases" id="btn-dl-dmg-intel" class="btn-download btn-download-alt">.dmg (Intel x64)</a>
+            <span class="btn-download btn-disabled" title="macOS notarized binary coming soon in next release">Coming Soon</span>
+            <a href="https://github.com/abdulwalidal/secure-backup#manual-build" class="btn-download btn-download-alt" target="_blank" rel="noopener">Build from Source</a>
           </div>
         </div>
       </div>
@@ -448,7 +448,7 @@
       if (!label || !btn) return;
 
       if (/Macintosh|Mac OS X/i.test(ua)) {
-        label.textContent = "Download for macOS (.dmg)";
+        label.textContent = "macOS Build (Coming Soon)";
         btn.href = "#downloads";
       } else if (/Windows|Win32|Win64/i.test(ua)) {
         label.textContent = "Download for Windows (.msi)";
